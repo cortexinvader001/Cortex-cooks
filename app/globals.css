@@ -1,0 +1,407 @@
+@import "tailwindcss";
+
+/* Warm Editorial palette. ember-deep is a darker ember used for any small text or
+   button fill, because #D9542B on cream is only 3.5:1 (fine for large display, not body). */
+@theme {
+  --color-cream: #f4efe6;
+  --color-sand: #eae3d6;
+  --color-surface: #ffffff;
+  --color-ink: #1a1714;
+  --color-ink-2: #6b6357;
+  --color-ember: #d9542b;
+  --color-ember-deep: #b8431e;
+  /* Small ember text on dark backgrounds: #D9542B is 4.46:1 on ink, this is above 5:1. */
+  --color-ember-light: #ea6a40;
+  --color-forest: #2f4b3a;
+  --color-line: #d8cfbe;
+
+  --font-display: "Space Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+}
+
+:root {
+  color-scheme: light;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --section-pad: clamp(5rem, 12vw, 10rem);
+  --skeleton-hi: #f1ebdf;
+}
+
+html {
+  background: var(--color-cream);
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.4vw + 0.9rem, 1.125rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--color-ember-deep);
+  color: var(--color-cream);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ember-deep);
+  outline-offset: 3px;
+}
+.on-dark :focus-visible {
+  outline-color: var(--color-cream);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* In the components layer so Tailwind utilities (text-[...], text-ember) can override them. */
+@layer components {
+  :root {
+    --hero-size: clamp(3.5rem, 24.5vw, 26rem);
+  }
+
+  .font-num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .display-hero {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--hero-size);
+    line-height: 0.82;
+    letter-spacing: -0.05em;
+  }
+
+  .display-section {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 4.5vw + 0.5rem, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+
+  .serif-italic {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* The serif "Cooks" sits a little smaller than CORTEX so the hero fits one screen. */
+  .hero-cooks {
+    font-size: calc(var(--hero-size) * 0.8);
+  }
+}
+
+/* Hero type sits over a photo: a bit smaller than the old stand-alone hero so the subject stays visible. */
+.hero-img {
+  --hero-size: clamp(3.5rem, 22vw, 22rem);
+}
+@media (min-width: 1024px) {
+  .hero-img {
+    --hero-size: clamp(3.5rem, 18.5vw, 20rem);
+  }
+}
+
+/* ---- Kinetic split text ---- */
+.split-line {
+  display: block;
+  overflow: hidden;
+  /* room for descenders and the serif italic overshoot */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.char {
+  display: inline-block;
+  will-change: transform;
+}
+/* Pre-reveal states use opacity only: GSAP sets the explicit transform values itself.
+   (A CSS transform here would be read by GSAP as a pixel offset and never cleared.)
+   The failsafe animation shows everything if scripts never run. */
+html[data-motion="full"] [data-split] .char,
+html[data-motion="full"] .pl-letter,
+html[data-motion="full"] .pl-cook,
+html[data-motion="full"] [data-reveal] {
+  opacity: 0;
+  animation: show-failsafe 0.01s linear 10s forwards;
+}
+html[data-motion="full"] [data-mask] {
+  clip-path: inset(100% 0 0 0);
+  animation: mask-failsafe 0.01s linear 10s forwards;
+}
+
+/* ---- Preloader letters: stacked-shadow 3D extrusion in deep orange ---- */
+.pl-letter {
+  text-shadow:
+    0.01em 0.01em 0 #b8431e,
+    0.02em 0.02em 0 #b0401c,
+    0.03em 0.03em 0 #a83d1b,
+    0.04em 0.04em 0 #a03a19,
+    0.05em 0.05em 0 #983718,
+    0.06em 0.06em 0 #903417,
+    0.07em 0.07em 0 #883116,
+    0.08em 0.08em 0 #802e15,
+    0.09em 0.09em 0 #782b14,
+    0.1em 0.1em 0 #702813,
+    0.12em 0.15em 0.1em rgba(26, 23, 20, 0.35);
+}
+@keyframes show-failsafe {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes mask-failsafe {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ---- Skeleton ---- */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-sand) 0%,
+    var(--skeleton-hi) 50%,
+    var(--color-sand) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---- Image placeholder: grill-bar stripes ---- */
+.grill-bars {
+  background-color: var(--color-ink);
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 22px,
+    rgba(217, 84, 43, 0.9) 22px 26px
+  );
+}
+.grill-bars-light {
+  background-color: var(--color-sand);
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 18px,
+    rgba(26, 23, 20, 0.14) 18px 20px
+  );
+}
+
+/* ---- Preloader: no-JS failsafe + repeat-visit skip ---- */
+.preloader {
+  animation: pl-failsafe 0.01s linear 12s forwards;
+}
+@keyframes pl-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+html[data-visited] .preloader {
+  display: none;
+}
+
+/* ---- Menu accordion ---- */
+.acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.acc-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.acc-panel > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ---- Dynamic-island header ---- */
+.island {
+  --ease: cubic-bezier(0.32, 0.72, 0, 1); /* iOS ease, used when closing */
+  --closed: 320px; /* pill width */
+  --open: 520px; /* drawer width */
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  z-index: 60;
+  width: min(88vw, var(--closed));
+  height: 52px;
+  overflow: hidden;
+  border-radius: 26px;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  border: 1px solid rgba(244, 239, 230, 0.12);
+  box-shadow:
+    0 1px 0 rgba(244, 239, 230, 0.06) inset,
+    0 14px 40px rgba(0, 0, 0, 0.28);
+  transition:
+    width 0.62s var(--ease),
+    height 0.62s var(--ease),
+    border-radius 0.62s var(--ease),
+    transform 0.9s cubic-bezier(0.22, 1.35, 0.36, 1);
+  will-change: width, height;
+}
+.island[data-open="true"] {
+  --ease: cubic-bezier(0.22, 1.18, 0.36, 1); /* slight overshoot when pulling down */
+  width: min(92vw, var(--open));
+  border-radius: 32px;
+}
+/* PC: a wider pill and a wider drawer with the links laid out in a row */
+@media (min-width: 768px) {
+  .island {
+    --closed: 440px;
+    --open: 780px;
+  }
+}
+/* Drops in from above when the page reveals */
+html[data-motion="full"] .island[data-in="false"] {
+  transform: translateY(-170%);
+  animation: island-failsafe 0.01s linear 12s forwards;
+}
+@keyframes island-failsafe {
+  to {
+    transform: none;
+  }
+}
+
+.island-body {
+  /* Always laid out at the open width and centred, so its height is stable while the pill grows. */
+  width: min(calc(92vw - 2px), calc(var(--open) - 2px));
+  margin-left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.island[data-open="true"] .island-body {
+  opacity: 1;
+  transition-duration: 0.3s;
+}
+.island-item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.island[data-open="true"] .island-item {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.45s ease calc(0.14s + var(--i) * 0.05s),
+    transform 0.6s var(--ease) calc(0.14s + var(--i) * 0.05s);
+}
+
+.island-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(14, 11, 9, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+.island-backdrop[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Hamburger: three dashes that turn into an X */
+.island-burger {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+.island-burger:hover {
+  background: rgba(244, 239, 230, 0.1);
+}
+.island-burger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 0.2s ease;
+}
+.island-burger[data-open="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.island-burger[data-open="true"] span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.2);
+}
+.island-burger[data-open="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+html[data-scroll-locked] {
+  overflow: hidden;
+}
+
+/* ---- Order bar ---- */
+.order-bar {
+  animation: bar-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes bar-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton {
+    animation: none;
+  }
+}
