@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { whenReady } from "@/lib/ready";
@@ -15,6 +16,8 @@ import { whenReady } from "@/lib/ready";
  *   [data-hero-exit] hero type lifts and fades as it scrolls away
  */
 export function MotionController() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const root = document.documentElement;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -130,17 +133,19 @@ export function MotionController() {
     const failsafe = window.setTimeout(() => heroTweens.forEach((t) => t.play()), 13000);
 
     // Fonts and images change layout: refresh trigger positions.
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
     document.fonts?.ready.then(() => ScrollTrigger.refresh());
     const onLoad = () => ScrollTrigger.refresh();
     window.addEventListener("load", onLoad);
 
     return () => {
+      cancelAnimationFrame(raf);
       stopWaiting();
       clearTimeout(failsafe);
       window.removeEventListener("load", onLoad);
       ctx.revert();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

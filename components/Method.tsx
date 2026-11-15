@@ -2,9 +2,9 @@ import ScrollReveal from "./reactbits/ScrollReveal/ScrollReveal";
 import ScrollStack, { ScrollStackItem } from "./reactbits/ScrollStack/ScrollStack";
 
 const beats = [
-  { n: "01", title: "Think", line: "Every plate starts with a plan.", bg: "#B8431E", fg: "#F4EFE6" },
-  { n: "02", title: "Cook", line: "Heat and timing, done on purpose.", bg: "#2F4B3A", fg: "#F4EFE6" },
-  { n: "03", title: "Serve", line: "Hot, fast, and worth the wait.", bg: "#F4EFE6", fg: "#1A1714" },
+  { title: "Think", line: "Every plate starts with a plan.", bg: "#B8431E", fg: "#F4EFE6" },
+  { title: "Cook", line: "Heat and timing, done on purpose.", bg: "#2F4B3A", fg: "#F4EFE6" },
+  { title: "Serve", line: "Hot, fast, and worth the wait.", bg: "#F4EFE6", fg: "#1A1714" },
 ];
 
 /**
@@ -18,7 +18,7 @@ export function Method() {
       className="on-dark bg-ink px-[var(--gutter)] pt-[var(--section-pad)] text-cream"
     >
       <div className="mx-auto max-w-[1440px]">
-        <p className="eyebrow mb-10 text-cream/70">02 / The Idea</p>
+        <p className="eyebrow mb-10 text-cream/70">The Idea</p>
         <ScrollReveal
           baseOpacity={0.12}
           enableBlur
@@ -45,7 +45,7 @@ export function Method() {
           >
             {beats.map((b) => (
               <ScrollStackItem
-                key={b.n}
+                key={b.title}
                 style={{
                   background: b.bg,
                   color: b.fg,
@@ -54,8 +54,7 @@ export function Method() {
                   padding: "clamp(1.5rem, 4vw, 3.5rem)",
                 }}
               >
-                <div className="flex h-full flex-col justify-between">
-                  <p className="eyebrow font-num">{b.n}</p>
+                <div className="flex h-full flex-col justify-end">
                   <div>
                     <p className="serif-italic text-[clamp(4rem,13vw,11rem)] leading-[0.85]">{b.title}</p>
                     <p className="mt-4 max-w-[28ch] text-lg">{b.line}</p>

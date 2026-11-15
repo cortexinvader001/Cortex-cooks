@@ -1,9 +1,11 @@
+import Link from "next/link";
+
 export default function NotFound() {
   return (
     <main
       id="main"
-      className="flex flex-col justify-between bg-ink px-[var(--gutter)] py-8 text-cream"
-      style={{ minHeight: "100svh" }}
+      className="flex flex-col justify-between bg-ink px-[var(--gutter)] pb-12 pt-28 text-cream"
+      style={{ minHeight: "calc(100svh - 5rem)" }}
     >
       <p className="eyebrow">Cortex Cooks / 404</p>
       <div>
@@ -12,12 +14,12 @@ export default function NotFound() {
           This plate is off the menu.
         </p>
       </div>
-      <a
-        href="/"
+      <Link
+        href="/menu"
         className="eyebrow inline-flex min-h-14 w-fit items-center bg-cream px-7 text-ink transition-colors duration-200 hover:bg-ember-deep hover:text-cream"
       >
         Back to the menu
-      </a>
+      </Link>
     </main>
   );
 }

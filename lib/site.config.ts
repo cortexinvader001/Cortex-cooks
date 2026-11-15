@@ -42,9 +42,9 @@ export const menu: MenuCategory[] = [
     blurb: "Fire-cooked, served hot.",
     imageKey: "grill",
     items: [
-      { id: "g1", name: "Sample grill plate 1", note: "Short description goes here", price: null },
-      { id: "g2", name: "Sample grill plate 2", note: "Short description goes here", price: null },
-      { id: "g3", name: "Sample grill plate 3", note: "Short description goes here", price: null },
+      { id: "g1", name: "Sample grill plate 1", note: "No description available", price: null },
+      { id: "g2", name: "Sample grill plate 2", note: "No description available", price: null },
+      { id: "g3", name: "Sample grill plate 3", note: "No description available", price: null },
     ],
   },
   {
@@ -53,8 +53,8 @@ export const menu: MenuCategory[] = [
     blurb: "Crisp outside, soft inside.",
     imageKey: "fries",
     items: [
-      { id: "f1", name: "Sample fries 1", note: "Short description goes here", price: null },
-      { id: "f2", name: "Sample fries 2", note: "Short description goes here", price: null },
+      { id: "f1", name: "Sample fries 1", note: "No description available", price: null },
+      { id: "f2", name: "Sample fries 2", note: "No description available", price: null },
     ],
   },
   {
@@ -63,9 +63,9 @@ export const menu: MenuCategory[] = [
     blurb: "The one everyone orders twice.",
     imageKey: "chicken",
     items: [
-      { id: "c1", name: "Sample chicken 1", note: "Short description goes here", price: null },
-      { id: "c2", name: "Sample chicken 2", note: "Short description goes here", price: null },
-      { id: "c3", name: "Sample chicken 3", note: "Short description goes here", price: null },
+      { id: "c1", name: "Sample chicken 1", note: "No description available", price: null },
+      { id: "c2", name: "Sample chicken 2", note: "No description available", price: null },
+      { id: "c3", name: "Sample chicken 3", note: "No description available", price: null },
     ],
   },
   {
@@ -74,8 +74,8 @@ export const menu: MenuCategory[] = [
     blurb: "Shaken, stirred, never rushed.",
     imageKey: "cocktails",
     items: [
-      { id: "k1", name: "Sample cocktail 1", note: "Short description goes here", price: null },
-      { id: "k2", name: "Sample cocktail 2", note: "Short description goes here", price: null },
+      { id: "k1", name: "Sample cocktail 1", note: "No description available", price: null },
+      { id: "k2", name: "Sample cocktail 2", note: "No description available", price: null },
     ],
   },
   {
@@ -84,8 +84,8 @@ export const menu: MenuCategory[] = [
     blurb: "Cold, fresh, blended to order.",
     imageKey: "smoothies",
     items: [
-      { id: "s1", name: "Sample smoothie 1", note: "Short description goes here", price: null },
-      { id: "s2", name: "Sample smoothie 2", note: "Short description goes here", price: null },
+      { id: "s1", name: "Sample smoothie 1", note: "No description available", price: null },
+      { id: "s2", name: "Sample smoothie 2", note: "No description available", price: null },
     ],
   },
 ];

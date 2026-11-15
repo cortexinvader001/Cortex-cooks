@@ -31,14 +31,14 @@ export function Visit() {
     >
       <div className="mx-auto grid max-w-[1440px] gap-14 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <p className="eyebrow mb-8 text-cream/70">03 / Visit</p>
+          <p className="eyebrow mb-8 text-cream/70">Visit</p>
           <h2 className="display-section text-[clamp(3.25rem,11vw,11rem)]">
             <Split text="Come" />
             <Split text="hungry." className="serif-italic" />
           </h2>
         </div>
 
-        <div className="self-end lg:col-span-5">
+        <div id="contact" className="self-end lg:col-span-5">
           <dl data-reveal="" className="m-0">
             <Row label="Address" value={site.address} href={site.mapsUrl || undefined} />
             <Row label="Hours" value={site.hours} />

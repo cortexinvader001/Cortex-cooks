@@ -23,7 +23,7 @@ export function Menu({ images }: { images: Record<string, string | null> }) {
     <section id="menu" className="px-[var(--gutter)] py-[var(--section-pad)]">
       <div className="mx-auto max-w-[1440px]">
         <div data-exit="" className="mb-14 grid gap-6 md:mb-20 lg:grid-cols-12">
-          <p className="eyebrow text-ink-2 lg:col-span-12">01 / The Menu</p>
+          <p className="eyebrow text-ink-2 lg:col-span-12">The Menu</p>
           <h2 className="display-section text-[clamp(3rem,8vw,8rem)] lg:col-span-8">
             <Split text="Pick your" />
             <Split text="fire." className="serif-italic text-ember" />
@@ -34,7 +34,7 @@ export function Menu({ images }: { images: Record<string, string | null> }) {
         </div>
 
         <ul className="border-t border-ink">
-          {menu.map((cat, idx) => {
+          {menu.map((cat) => {
             const open = openId === cat.id;
             const panelId = `panel-${cat.id}`;
             return (
@@ -47,9 +47,6 @@ export function Menu({ images }: { images: Record<string, string | null> }) {
                     onClick={() => setOpenId(open ? null : cat.id)}
                     className="group flex w-full items-baseline gap-4 py-5 text-left md:gap-8 md:py-7"
                   >
-                    <span className="eyebrow font-num w-8 shrink-0 text-ink-2 md:w-12">
-                      0{idx + 1}
-                    </span>
                     <span className="font-display min-w-0 flex-1 text-[clamp(2.75rem,9vw,9rem)] font-bold leading-[0.9] tracking-[-0.04em] transition-transform duration-500 group-hover:translate-x-3 group-focus-visible:translate-x-3">
                       {cat.title}
                     </span>
@@ -67,7 +64,7 @@ export function Menu({ images }: { images: Record<string, string | null> }) {
 
                 <div id={panelId} role="region" aria-label={`${cat.title} items`} data-open={open} className="acc-panel">
                   <div>
-                    <div className="grid gap-8 pb-10 pt-2 md:pl-20 lg:grid-cols-12 lg:gap-12">
+                    <div className="grid gap-8 pb-10 pt-2 lg:grid-cols-12 lg:gap-12">
                       <ul className="lg:col-span-7">
                         {cat.items.map((item) => {
                           const qty = cart[item.id] ?? 0;
@@ -143,7 +140,6 @@ export function Menu({ images }: { images: Record<string, string | null> }) {
             );
           })}
         </ul>
-        <p className="eyebrow mt-6 text-ink-2">Sample items shown. Final menu and prices to be added.</p>
       </div>
     </section>
     </ClickSpark>

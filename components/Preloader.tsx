@@ -29,7 +29,6 @@ export function Preloader() {
   const root = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const caret = useRef<HTMLSpanElement>(null);
-  const counter = useRef<HTMLSpanElement>(null);
   const circles = useRef<(HTMLSpanElement | null)[]>([]);
   const [done, setDone] = useState(false);
 
@@ -54,24 +53,12 @@ export function Preloader() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     lock(true);
 
-    // ---- Real readiness: fonts + full page load, weighted into the counter ----
+    // ---- Real readiness: fonts + full page load ----
     const fontsP: Promise<unknown> = document.fonts?.ready ?? Promise.resolve();
     const loadP = new Promise<void>((res) => {
       if (document.readyState === "complete") res();
       else window.addEventListener("load", () => res(), { once: true });
     });
-    const state = { progress: 0, shown: 0 };
-    const render = () => {
-      if (counter.current) counter.current.textContent = String(Math.round(state.shown)).padStart(3, "0");
-    };
-    const toProgress = (target: number) =>
-      gsap.to(state, { shown: target, duration: 0.6, ease: "power2.out", onUpdate: render });
-    [fontsP, loadP].forEach((p) =>
-      Promise.resolve(p).finally(() => {
-        state.progress += 50;
-        toProgress(state.progress);
-      }),
-    );
     const readyP = Promise.race([
       Promise.allSettled([fontsP, loadP]),
       new Promise((r) => setTimeout(r, CRITICAL_TIMEOUT_MS)),
@@ -96,7 +83,7 @@ export function Preloader() {
       });
       return () => {
         lock(false);
-        gsap.killTweensOf([el, state]);
+        gsap.killTweensOf(el);
       };
     }
 
@@ -240,7 +227,7 @@ export function Preloader() {
       window.removeEventListener("keydown", skip);
       window.removeEventListener("pointerdown", skip);
       ctx.revert();
-      gsap.killTweensOf([el, state]);
+      gsap.killTweensOf(el);
       lock(false);
     };
   }, []);
@@ -295,16 +282,6 @@ export function Preloader() {
             style={{ width: 80, height: 80, marginLeft: -40, marginTop: -40, opacity: 0, willChange: "transform" }}
           />
         ))}
-      </div>
-
-      <div
-        aria-hidden="true"
-        className="eyebrow absolute inset-x-0 bottom-0 z-10 flex justify-between px-[var(--gutter)] pb-6 text-ink-2"
-      >
-        <span>Loading</span>
-        <span ref={counter} className="font-num">
-          000
-        </span>
       </div>
     </div>
   );

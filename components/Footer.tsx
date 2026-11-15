@@ -7,9 +7,6 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} {site.name}. All rights reserved.
         </p>
-        <p>
-          Some animation components from React Bits by David Haz, used under the MIT + Commons Clause license.
-        </p>
       </div>
     </footer>
   );

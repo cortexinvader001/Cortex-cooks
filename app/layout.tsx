@@ -8,6 +8,9 @@ import { OrderProvider } from "@/lib/order";
 import { Preloader } from "@/components/Preloader";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { MotionController } from "@/components/MotionController";
+import { Nav } from "@/components/Nav";
+import { Footer } from "@/components/Footer";
+import { OrderBar } from "@/components/OrderBar";
 import { site } from "@/lib/site.config";
 
 export const metadata: Metadata = {
@@ -44,7 +47,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <Preloader />
         <SmoothScroll />
-        <OrderProvider>{children}</OrderProvider>
+        <OrderProvider>
+          <Nav />
+          {children}
+          <Footer />
+          <OrderBar />
+        </OrderProvider>
         <MotionController />
       </body>
     </html>

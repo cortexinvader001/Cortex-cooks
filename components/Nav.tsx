@@ -1,14 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { site, whatsappLink } from "@/lib/site.config";
 import { useOrder } from "@/lib/order";
 import { whenReady } from "@/lib/ready";
 
 const links = [
-  { href: "#menu", label: "Menu" },
-  { href: "#story", label: "Story" },
-  { href: "#visit", label: "Visit" },
+  { href: "/menu", label: "Menu" },
+  { href: "/story", label: "Story" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const BAR_H = 52;
@@ -158,13 +159,16 @@ export function Nav() {
               <span />
             </button>
 
-            <a
-              href="#top"
-              onClick={(e) => go(e, "#top")}
+            <Link
+              href="/"
+              onClick={() => {
+                close();
+                document.documentElement.removeAttribute("data-scroll-locked");
+              }}
               className="font-display text-[1.05rem] font-bold leading-none tracking-tight"
             >
               Cortex <span className="serif-italic text-[1.35rem] text-ember-light">Cooks</span>
-            </a>
+            </Link>
 
             <a
               href={link}
@@ -186,21 +190,23 @@ export function Nav() {
                   className="island-item border-t border-cream/15 sm:border-l sm:pl-6 sm:first:border-l-0 sm:first:pl-0"
                   style={{ ["--i" as string]: i }}
                 >
-                  <a
+                  <Link
                     href={l.href}
-                    onClick={(e) => go(e, l.href)}
+                    onClick={() => {
+                      close();
+                      document.documentElement.removeAttribute("data-scroll-locked");
+                    }}
                     className="island-link group flex items-baseline justify-between gap-4 py-3.5 sm:flex-col sm:items-start sm:justify-start sm:gap-3 sm:py-6"
                   >
                     <span className="font-display text-[clamp(2.5rem,9vw,3.75rem)] font-bold leading-none tracking-[-0.03em] transition-[transform,color] duration-300 group-hover:translate-x-2 group-hover:text-ember-light group-focus-visible:translate-x-2 group-focus-visible:text-ember-light sm:text-[clamp(2.25rem,4vw,3.5rem)]">
                       {l.label}
                     </span>
-                    <span className="eyebrow font-num text-cream/60 sm:order-first">0{i + 1}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
 
-            {/* Phones: button then tagline. PC: tagline on the left, button on the right, in one row. */}
+            {/* Phones: button then instagram. PC: instagram on the left, button on the right, in one row. */}
             <div className="sm:flex sm:flex-row-reverse sm:items-center sm:justify-between sm:gap-6 sm:border-t sm:border-cream/15 sm:pt-4">
               <div className="island-item mt-3 sm:mt-0" style={{ ["--i" as string]: 3 }}>
                 <a
@@ -213,17 +219,16 @@ export function Nav() {
                 </a>
               </div>
 
-              <div
-                className="island-item eyebrow mt-4 flex flex-wrap justify-between gap-x-4 gap-y-1 text-cream/60 sm:mt-0 sm:justify-start"
-                style={{ ["--i" as string]: 4 }}
-              >
-                <span>Grill / Fries / Chicken / Cocktails / Smoothies</span>
-                {site.instagram && (
+              {site.instagram && (
+                <div
+                  className="island-item eyebrow mt-4 flex flex-wrap justify-between gap-x-4 gap-y-1 text-cream/60 sm:mt-0 sm:justify-start"
+                  style={{ ["--i" as string]: 4 }}
+                >
                   <a href={`https://instagram.com/${site.instagram}`} className="underline underline-offset-4">
                     @{site.instagram}
                   </a>
-                )}
-              </div>
+                </div>
+              )}
             </div>
 
             <button

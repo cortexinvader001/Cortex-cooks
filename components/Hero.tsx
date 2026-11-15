@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Split } from "./Split";
 import { ImageSlot } from "./ImageSlot";
 import { MagneticLink } from "./MagneticLink";
@@ -42,10 +43,6 @@ export function Hero({ image }: { image: string | null }) {
         className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-between px-[var(--gutter)] pb-10 pt-24 md:pb-14"
       >
         <div>
-          <div className="eyebrow flex flex-wrap justify-between gap-x-6 gap-y-1 text-cream/85">
-            <span>Grill / Fries / Chicken / Cocktails / Smoothies</span>
-          </div>
-
           <h1 aria-label="Cortex Cooks" className="m-0 mt-6 md:mt-10" style={{ textShadow: "0 2px 40px rgba(0,0,0,0.35)" }}>
             <Split hero text="CORTEX" className="display-hero" />
             <Split hero text="Cooks" className="display-hero hero-cooks serif-italic text-ember-light lg:ml-[3%]" />
@@ -66,17 +63,17 @@ export function Hero({ image }: { image: string | null }) {
               >
                 Order on WhatsApp
               </MagneticLink>
-              <a href="#menu" className="eyebrow inline-flex min-h-11 items-center border-b border-cream">
+              <Link href="/menu" className="eyebrow inline-flex min-h-11 items-center border-b border-cream">
                 See the menu
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
       {/* Spinning badge (React Bits CircularText) linking to the menu */}
-      <a
-        href="#menu"
+      <Link
+        href="/menu"
         aria-label="Jump to the menu"
         className="absolute bottom-10 left-[40%] z-10 hidden rounded-full bg-ink/70 sm:block md:bottom-14 lg:left-[38%]"
       >
@@ -94,7 +91,7 @@ export function Hero({ image }: { image: string | null }) {
             ↓
           </span>
         </CircularText>
-      </a>
+      </Link>
     </section>
   );
 }
